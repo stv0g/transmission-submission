@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Torrent Submission</title>
+	<script>
+		vapidPublicKey = "{{ .VAPIDPublicKey }}";
+	</script>
+	<link href="style.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container" style="max-width: 50%;">
+		<div class="my-5 row">
+			<div class="text-center col">
+				<h1><img class="logo" src="logo.svg"></img> Torrent Submission</h1>
+			</div>
+		</div>
+
+		{{ if .Error }}
+		<div class="mt-5 row">
+			<div class="col">
+				<div class="alert alert-danger" role="alert"><b>Error:</b> {{ .Error }}</div>
+			</div>
+		</div>
+		{{ end }}
+
+		<div class="mt-5 row">
+			<p>1. Click on the following button to register this tool for magnet URLs:</p>
+			<div class="col">
+				<button class="btn btn-secondary" onclick="registerHandler()">Register "magnet:" URL handler</button>
+			</div>
+		</div>
+
+		<div class="row mt-5">
+			<div class="col">
+				<p>2. Browser the following sites to find new torrents:</p>
+				<ul>
+					<li><a href="https://yts.mx/">YTS.mx</a></li>
+					<li><a href="https://www.limetorrents.lol/">Lime Torrents</a></li>
+					<li><a href="https://thepiratebay.org/">The Pirate Bay</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="row mt-5">
+			<div class="col">
+				<p>3. Add a new torrents here:</p>
+				<form action="/" method="post" enctype="multipart/form-data">
+					<div class="mb-3">
+						<label for="torrents">Torrent Files</label>
+						<input class="form-control" type="file" id="torrents" name="torrents" accept=".torrent" multiple>
+						<small id="torrentsHelp" class="form-text text-muted">Upload .torrent files.</small>
+					</div>
+					<div class="mb-3">
+						<label for="magnets">Magnet Links</label>
+						<textarea class="form-control" id="magnets" name="magnets" rows="5" placeholder="magnet:...
+magnet:..."></textarea>
+						<small id="magnetHelp" class="form-text text-muted">alternatively provide a list of Magnet links.</small>
+					</div>
+					<input id="subscription" name="subscription" type="text" hidden>
+					<button type="submit" class="btn btn-primary" disabled id="add">Submit</button>
+				</form>
+			</div>
+		</div>
+
+		{{ if .Torrents }}
+		<div class="mt-5 row">
+			<div class="col">
+				<p>Currently downloading torrents:</p>
+				<table class="table">
+					<tbody>
+					{{ range $i, $torrent := .Torrents }}
+					  <tr>
+						<th scope="row">{{ $i }}</th>
+						<td>{{ $torrent.Details.Name }}</td>
+					  </tr>
+					{{ end }}
+					</tbody>
+				  </table>
+			</div>
+		</div>
+		{{ end }}
+
+	</div>
+	<script src="script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+
+</html>
