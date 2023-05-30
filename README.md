@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2023 Steffen Vogel <post@steffenvogel.de>
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # transmission-submission
 
 `transmission-submission` is a little web service to submit new torrent files and magnet links to [Transmission](https://transmissionbt.com/) via its RPC interface.
